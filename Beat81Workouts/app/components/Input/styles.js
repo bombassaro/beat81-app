@@ -8,9 +8,11 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     borderColor: 'rgba(0,0,0,0.2)',
-    borderRadius: 20,
+    borderRadius: 10,
     borderWidth: 1,
     height: 40,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
 });
 
