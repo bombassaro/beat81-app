@@ -10,55 +10,60 @@ import styles from '../components/Container/styles'
 import Event from '../components/Event'
 import Section from '../components/Section'
 
-import { nextDays, dataEvents } from '../data'
+import { Content } from '../data/provider'
+import selectEvent from '../data/actions/selectEvent'
 
-class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return { title: `Home` };
-  };
-  renderEvents(day) {
-    const filtered = _.filter(dataEvents, { day })
+const WorkoutsScreen = (props) => {
+  
+  const { state, dispatch } = React.useContext(Content);
+  const { days, events } = state
+
+  goToEvent = (eventId) => {
+    selectEvent(dispatch, eventId)
+    props.navigation.navigate(`Workout`)
+  }
+
+  renderEvents = (day) => {
+    const filtered = _.filter(events, { day })
     return _.map(filtered, (item, key) => {
       return (
         <Event 
-          {...this.props}
+          {...props}
+          goToEvent={goToEvent}
           data={item} 
           key={key} />
       )
     })
   }
-  renderSections() {
-    return _.map(nextDays, (item, key) => {
+  renderSections = () => {
+    return _.map(days, (item, key) => {
       return (
         <Section 
-          {...this.props}
+          {...props}
           title={item} 
           key={key}>
-          { this.renderEvents(item) }
+          { renderEvents(item) }
         </Section>
       )
     })
   }
-  render() {
-    const functions = {
-      goto: (route) => this.props.navigation.navigate(route)
-    }
-    const buttonWorkout = {
-      title: `WORKOUT`,
-      style: styles.sectionTitle,
-      onPress: () => functions.goto('Workout')
-    }
-    return (
-      <Container>
-        <View style={styles.body}>
-          <View style={styles.sectionContainer}>
-            { this.renderSections() }
-          </View>
-        </View>
-      </Container>
-
-    )
+  const buttonWorkout = {
+    title: `WORKOUT`,
+    style: styles.sectionTitle,
+    onPress: () => props.navigation.navigate('Workout')
   }
-}
+  return (
+    <Container>
+      <View style={styles.body}>
+        <View style={styles.sectionContainer}>
+          { renderSections() }
+        </View>
+      </View>
+    </Container>
 
-export default HomeScreen
+  )
+}
+WorkoutsScreen.navigationOptions = ({ navigation }) => {
+  return { title: `Home` };
+}
+export default WorkoutsScreen

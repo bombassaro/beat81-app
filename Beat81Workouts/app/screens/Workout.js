@@ -13,53 +13,52 @@ import Section from '../components/Section'
 
 import styles from '../components/Container/styles'
 
-import { dataProfile } from '../data'
+import { Content } from '../data/provider'
+
 import { selectedEvent } from '../data'
 
-class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return { title: `Workout` };
-  }
-  renderAttendance() {
-    return _.map(dataProfile, (item, key) => {
+const WorkoutScreen = (props) => {
+
+  const { state } = React.useContext(Content);
+  const { events, members, selected } = state
+  const eventData = events[selected]
+
+  const renderAttendance = () => {
+    return _.map(members, (item, key) => {
       return (
         <Profile
-          {...this.props}
+          {...props}
           data={item}
           key={key} />
       )
     })
   }
-  render() {
-    const functions = {
-      goto: (route) => this.props.navigation.navigate(route)
-    }
-    const buttonCheckin = {
-      title: `CHECK-IN`,
-      style: styles.sectionTitle,
-      onPress: () => functions.goto('Checkin')
-    }
-    return (
-      <Container>
-        <View style={styles.body}>
-          <View style={styles.sectionContainer}>
-            <Section 
-              {...this.props}
-              title={selectedEvent(0).day} />
-            <Event 
-              {...this.props}
-              data={selectedEvent(0)} />
-            <Section 
-              {...this.props}
-              title={`Participants (3 check-ins)`} />
-            { this.renderAttendance() }
-            <Button {...buttonCheckin} />
-          </View>
-        </View>
-      </Container>
-
-    )
+  const buttonCheckin = {
+    title: `CHECK-IN`,
+    style: styles.sectionTitle,
+    onPress: () => props.navigation.navigate(`Checkin`)
   }
+  return (
+    <Container>
+      <View style={styles.body}>
+        <View style={styles.sectionContainer}>
+          <Section 
+            {...props}
+            title={eventData.day} />
+          <Event 
+            {...props}
+            data={eventData} />
+          <Section 
+            {...props}
+            title={`Participants (3 check-ins)`} />
+          { renderAttendance() }
+          <Button {...buttonCheckin} />
+        </View>
+      </View>
+    </Container>
+  )
 }
-
-export default HomeScreen
+WorkoutScreen.navigationOptions = ({ navigation }) => {
+  return { title: `Workout` };
+}
+export default WorkoutScreen

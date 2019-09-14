@@ -14,15 +14,35 @@ import Section from '../components/Section'
 
 import styles from '../components/Container/styles'
 
-import { dataProfile } from '../data'
+import { dataProfile, dataImages } from '../data'
 import { selectedEvent } from '../data'
 
-class CheckinScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return { title: `Check-in` };
+import { Content } from '../data/provider'
+
+import submit from '../data/actions/submit'
+
+const CheckinScreen = (props) => {
+  
+  const { state, socket, dispatch } = React.useContext(Content);
+  
+  const [firstname, setFirstname] = React.useState("")
+
+  addNewAttendee = () => {
+    submit(socket, dispatch, firstname)
+    setFirstname("")
   }
-  renderAttendance() {
-    return _.map(dataProfile, (item, key) => {
+  renderInputAttendee = () => {
+    return (
+      <Input 
+        autoCorrect={false}
+        value={firstname}
+        onSubmitEditing={() => addNewAttendee()} 
+        onChangeText={firstname => setFirstname(firstname)} />
+    )
+  }
+  renderAttendees = () => {
+    const { members } = state
+    return _.map(members, (item, key) => {
       return (
         <Profile
           {...this.props}
@@ -31,37 +51,36 @@ class CheckinScreen extends React.Component {
       )
     })
   }
-  render() {
-    const functions = {
-      goto: (route) => this.props.navigation.navigate(route),
-      goback: () => this.props.navigation.goBack()
-    }
-    const buttonClose = {
-      title: `CLOSE`,
-      style: styles.sectionTitle,
-      onPress: () => functions.goback()
-    }
-    return (
-      <Container>
-        <View style={styles.body}>
-          <View style={styles.sectionContainer}>
-            <Section 
-              {...this.props}
-              title={selectedEvent(0).day} />
-            <Event 
-              {...this.props}
-              data={selectedEvent(0)} />
-            <Section title={`Add new member`} />
-            <Input />
-            <Section title={`Members`} />
-            { this.renderAttendance() }
-            <Button {...buttonClose} />
-          </View>
-        </View>
-      </Container>
-
-    )
+  const functions = {
+    goto: (route) => props.navigation.navigate(route),
+    goback: () => props.navigation.goBack(),
   }
+  const buttonClose = {
+    title: `CLOSE`,
+    style: styles.sectionTitle,
+    onPress: () => functions.goback()
+  }
+  return (
+    <Container>
+      <View style={styles.body}>
+        <View style={styles.sectionContainer}>
+          <Section 
+            {...props}
+            title={selectedEvent(0).day} />
+          <Event 
+            {...props}
+            data={selectedEvent(0)} />
+          <Section title={`Add new member`} />
+          { this.renderInputAttendee() }
+          <Section title={`Members`} />
+          { this.renderAttendees() }
+          <Button {...buttonClose} />
+        </View>
+      </View>
+    </Container>
+  )
 }
-
+CheckinScreen.navigationOptions = ({ navigation }) => {
+  return { title: `Check-in` };
+}
 export default CheckinScreen

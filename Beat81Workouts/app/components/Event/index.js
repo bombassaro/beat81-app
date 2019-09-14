@@ -9,13 +9,9 @@ import styles from './styles';
 
 const Event = (props) => {
 	const { data } = props
-	const goTo = () => {
-		const route = `Workout`
-		props.navigation.navigate(route)
-	}
   return (
     <TouchableOpacity 
-    	onPress={() => goTo()}
+    	onPress={() => props.goToEvent(data.id)}
     	style={styles.body}>
   		<View style={{...styles.col, ...styles.main}}>
       	<Text style={styles.title}>{data.title}</Text>
