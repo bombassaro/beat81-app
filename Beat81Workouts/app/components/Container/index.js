@@ -12,9 +12,7 @@ const Container = (props) => {
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
-          <React.Fragment>
-            {props.children}
-          </React.Fragment>
+          {props.children}
         </ScrollView>
       </SafeAreaView>
     </React.Fragment>
