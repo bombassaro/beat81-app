@@ -19,6 +19,7 @@ import { selectedEvent } from '../data'
 
 import { Content } from '../data/provider'
 
+import checkin from '../data/actions/submit'
 import submit from '../data/actions/submit'
 
 const CheckinScreen = (props) => {
@@ -30,6 +31,11 @@ const CheckinScreen = (props) => {
   addNewAttendee = () => {
     submit(socket, dispatch, firstname)
     setFirstname("")
+  }
+  doCheckin = (firstname) => {
+    const { selected } = state
+    console.log(selected, firstname)
+    checkin(socket, dispatch, selected, firstname)
   }
   renderInputAttendee = () => {
     return (
@@ -45,7 +51,8 @@ const CheckinScreen = (props) => {
     return _.map(members, (item, key) => {
       return (
         <Profile
-          {...this.props}
+          {...props}
+          checkin={doCheckin}
           data={item}
           key={key} />
       )
@@ -71,9 +78,9 @@ const CheckinScreen = (props) => {
             {...props}
             data={selectedEvent(0)} />
           <Section title={`Add new member`} />
-          { this.renderInputAttendee() }
+          { renderInputAttendee() }
           <Section title={`Members`} />
-          { this.renderAttendees() }
+          { renderAttendees() }
           <Button {...buttonClose} />
         </View>
       </View>

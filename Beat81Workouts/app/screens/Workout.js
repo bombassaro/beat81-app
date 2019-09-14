@@ -22,13 +22,20 @@ const WorkoutScreen = (props) => {
   const { state } = React.useContext(Content);
   const { events, members, selected } = state
   const eventData = events[selected]
+  const { attendees } = eventData
+  console.log(selected, eventData)
 
   const renderAttendance = () => {
-    return _.map(members, (item, key) => {
+    return _.map(attendees, (item, key) => {
+      const member = _.find(members, { name: item.name })
+      const _item = {
+        ...item,
+        img: member.img
+      }
       return (
         <Profile
           {...props}
-          data={item}
+          data={_item}
           key={key} />
       )
     })
@@ -50,7 +57,7 @@ const WorkoutScreen = (props) => {
             data={eventData} />
           <Section 
             {...props}
-            title={`Participants (3 check-ins)`} />
+            title={`Participants (${attendees.length} check-ins)`} />
           { renderAttendance() }
           <Button {...buttonCheckin} />
         </View>
