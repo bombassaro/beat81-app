@@ -9,16 +9,18 @@ import React from 'react';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import HomeScreen from './app/screens/Home'
+import CheckinScreen from './app/screens/Checkin'
 import WorkoutScreen from './app/screens/Workout'
+import WorkoutsScreen from './app/screens/Workouts'
 
 const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
+    Checkin: CheckinScreen,
     Workout: WorkoutScreen,
+    Workouts: WorkoutsScreen,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Workouts',
   }
 );
 

@@ -7,12 +7,17 @@ import {
 import Container from '../components/Container'
 import styles from '../components/Container/styles'
 
+import { goToRoute } from '../utils/navigation'
+
 class HomeScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return { title: `Home` };
+  };
   render() {
     const functions = {
-      goto: (route) => this.props.navigation.navigate(route)
+      goto: (route) => goToRoute(this.props, route)
     }
-    const btnGoToHome = {
+    const buttonWorkout = {
       title: `WORKOUT`,
       style: styles.sectionTitle,
       onPress: () => functions.goto('Workout')
@@ -21,8 +26,7 @@ class HomeScreen extends React.Component {
       <Container>
         <View style={styles.body}>
           <View style={styles.sectionContainer}>
-            <Text style={styles.sectionTitle}>HOME</Text>
-            <Button {...btnGoToHome} />
+            <Button {...buttonWorkout} />
           </View>
         </View>
       </Container>
