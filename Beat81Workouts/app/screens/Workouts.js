@@ -18,6 +18,17 @@ const WorkoutsScreen = (props) => {
   const { state, dispatch } = React.useContext(Content);
   const { days, events } = state
 
+  if(days.length === 0) {
+    return ( 
+      <Container>
+        <View>
+          <Text>Content.Provider not found.</Text>
+          <Text>Check socket connection.</Text>
+        </View>
+      </Container>
+    )
+  }
+
   goToEvent = (eventId) => {
     selectEvent(dispatch, eventId)
     props.navigation.navigate(`Workout`)

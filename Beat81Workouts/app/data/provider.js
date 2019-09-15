@@ -1,5 +1,12 @@
 import React from 'react';
 import io from "socket.io-client"
+
+import {
+  Button,
+  View,
+  Text,
+} from 'react-native';
+
 import { reducer, initialState } from './reducer'
 
 import loadEvents from './actions/loadEvents'

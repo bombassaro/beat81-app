@@ -28,11 +28,11 @@ const checkin = (event, member) => {
     name: member,
     date: new Date()
   }
-  const isUnshift = _.find(attendance, {
+  const isCheckedin = _.find(attendance, {
     event: event,
     name: member
   })
-  isUnshift ?
+  isCheckedin ?
     _.remove(store.attendance, { event: item.event, name: item.name }) :
       store.attendance.push(item)
 }
