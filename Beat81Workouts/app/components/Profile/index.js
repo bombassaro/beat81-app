@@ -9,6 +9,12 @@ import styles from './styles';
 
 const Profile = (props) => {
 	const { data } = props
+  
+  const d = !data.date ? `` : new Date(data.date)
+  
+  const checkedin = !d ? d : 
+    `Checked-in at ${d.getHours()}:${(`0`+d.getMinutes()).slice(-2)}`
+
   return (
     <TouchableOpacity 
       onPress={() => props.checkin(data.name)}
@@ -18,7 +24,7 @@ const Profile = (props) => {
       </View>
   		<View style={{...styles.col, ...styles.main}}>
       	<Text style={styles.title}>{data.name}</Text>
-      	<Text style={styles.lead}>Checked-in at 11:00 AM</Text>
+      	<Text style={styles.lead}>{checkedin}</Text>
       </View>
     </TouchableOpacity>
   )

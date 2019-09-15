@@ -10,20 +10,28 @@ import Container from '../components/Container'
 import Event from '../components/Event'
 import Profile from '../components/Profile'
 import Section from '../components/Section'
-
 import styles from '../components/Container/styles'
 
 import { Content } from '../data/provider'
 
-import { selectedEvent } from '../data'
+import checkin from '../data/actions/checkin'
+import selectEvent from '../data/actions/selectEvent'
 
 const WorkoutScreen = (props) => {
 
-  const { state } = React.useContext(Content);
+  const { dispatch, state, socket } = React.useContext(Content);
   const { events, members, selected } = state
   const eventData = events[selected]
   const { attendees } = eventData
-  console.log(selected, eventData)
+
+  const goToEvent = (eventId) => {
+    selectEvent(dispatch, eventId)
+    props.navigation.navigate(`Workout`)
+  }
+
+  const doCheckin = (firstname) => {
+    checkin(socket, dispatch, selected, firstname)
+  }
 
   const renderAttendance = () => {
     return _.map(attendees, (item, key) => {
@@ -35,6 +43,7 @@ const WorkoutScreen = (props) => {
       return (
         <Profile
           {...props}
+          checkin={doCheckin}
           data={_item}
           key={key} />
       )
@@ -54,6 +63,7 @@ const WorkoutScreen = (props) => {
             title={eventData.day} />
           <Event 
             {...props}
+            goToEvent={goToEvent}
             data={eventData} />
           <Section 
             {...props}

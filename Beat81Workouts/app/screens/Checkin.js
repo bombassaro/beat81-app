@@ -14,27 +14,34 @@ import Section from '../components/Section'
 
 import styles from '../components/Container/styles'
 
-import { dataProfile, dataImages } from '../data'
-import { selectedEvent } from '../data'
-
 import { Content } from '../data/provider'
 
-import checkin from '../data/actions/submit'
+import checkin from '../data/actions/checkin'
 import submit from '../data/actions/submit'
+import selectEvent from '../data/actions/selectEvent'
 
 const CheckinScreen = (props) => {
   
   const { state, socket, dispatch } = React.useContext(Content);
-  
+  const { events, selected } = state
+  const selectedData = _.find(events, { id: selected })
+  const { attendees } = selectedData
   const [firstname, setFirstname] = React.useState("")
 
+  const goToEvent = (eventId) => {
+    selectEvent(dispatch, eventId)
+    props.navigation.navigate(`Workout`)
+  }
+
   addNewAttendee = () => {
+    if(!firstname || firstname === "") return false
+    const { members } = state
+    const hasMember = _.find(members, { name: firstname})
+    if(hasMember) return false
     submit(socket, dispatch, firstname)
     setFirstname("")
   }
   doCheckin = (firstname) => {
-    const { selected } = state
-    console.log(selected, firstname)
     checkin(socket, dispatch, selected, firstname)
   }
   renderInputAttendee = () => {
@@ -49,11 +56,16 @@ const CheckinScreen = (props) => {
   renderAttendees = () => {
     const { members } = state
     return _.map(members, (item, key) => {
+      const checked = _.find(attendees, { name: item.name })
+      const member = {
+        ...item,
+        date: checked ? checked.date : ``
+      }
       return (
         <Profile
           {...props}
           checkin={doCheckin}
-          data={item}
+          data={member}
           key={key} />
       )
     })
@@ -73,10 +85,11 @@ const CheckinScreen = (props) => {
         <View style={styles.sectionContainer}>
           <Section 
             {...props}
-            title={selectedEvent(0).day} />
+            title={selectedData.day} />
           <Event 
             {...props}
-            data={selectedEvent(0)} />
+            goToEvent={goToEvent}
+            data={selectedData} />
           <Section title={`Add new member`} />
           { renderInputAttendee() }
           <Section title={`Members`} />
