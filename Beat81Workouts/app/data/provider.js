@@ -23,7 +23,7 @@ const Provider = (props) => {
       `http://10.0.2.2:3000` : 
         `http://localhost:3000`
 
-  // API_URL = `xprog....` // xprog-server
+  API_URL = `http://www.xprog.com.br:3000` // xprog-server
 
   const socket = io(API_URL)
 
