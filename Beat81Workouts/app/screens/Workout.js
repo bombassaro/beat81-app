@@ -38,7 +38,7 @@ const WorkoutScreen = (props) => {
       const member = _.find(members, { name: item.name })
       const _item = {
         ...item,
-        img: member.img
+        img: member && member.img
       }
       return (
         <Profile

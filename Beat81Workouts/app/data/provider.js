@@ -24,6 +24,8 @@ const Provider = (props) => {
         `http://localhost:3000`
 
   API_URL = `http://www.xprog.com.br:3000` // xprog-server
+  
+  console.disableYellowBox = true
 
   const socket = io(API_URL)
 
