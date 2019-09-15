@@ -7,11 +7,33 @@ const dataImages = {
     `994901d5-92da-4ab6-b9dd-f74f21f708b6`
   ]
 }
+const members = [{
+  name: `Leonardo C`,
+  img: dataImages.items[3]
+},{
+  name: `Paula S`,
+  img: dataImages.items[3]
+},{
+  name: `Betina D`,
+  img: dataImages.items[1]
+},{
+  name: `Marcus A`,
+  img: dataImages.items[2]
+}]
 
-const nextDays = [
-  `September 14`,
-  `September 15`,
-]
+const dataAttend = [{
+  event: 0,
+  name: members[2].name,
+  date: "2019-09-15T07:50:21.739Z"
+},{
+  event: 0,
+  name: members[1].name,
+  date: "2019-09-15T07:50:21.739Z"
+},{
+  event: 1,
+  name: members[0].name,
+  date: "2019-09-15T07:50:21.739Z"
+}]
 
 const dataEvents = [{
   id: 0,
@@ -39,26 +61,16 @@ const dataEvents = [{
   img: dataImages.items[0]
 }]
 
-const members = [{
-  name: `Leonardo C`,
-  img: dataImages.items[3]
-},{
-  name: `Paula S`,
-  img: dataImages.items[3]
-},{
-  name: `Betina D`,
-  img: dataImages.items[1]
-},{
-  name: `Marcus A`,
-  img: dataImages.items[2]
-}]
-
-const selectedEvent = (idx) => dataEvents[idx]
+const nextDays = [
+  `September 14`,
+  `September 15`,
+]
+// const selectedEvent = (idx) => dataEvents[idx]
 
 module.exports = {
+  dataAttend,
   dataEvents,
   dataImages,
   members,
-  nextDays,
-  selectedEvent
+  nextDays
 }

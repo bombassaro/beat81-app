@@ -6,6 +6,7 @@ const port = 3000;
 const _ = require("lodash")
 
 const { 
+  dataAttend,
   dataEvents, 
   dataImages, 
   members, 
@@ -13,27 +14,26 @@ const {
 } = require("./data")
 
 const store = {
-  attendance: [{
-    event: 0,
-    name: members[2].name
-  },{
-    event: 0,
-    name: members[1].name
-  },{
-    event: 1,
-    name: members[0].name
-  }],
+  attendance: dataAttend,
   days: nextDays,
   events: dataEvents,
 	members: members
 }
 
 const checkin = (event, member) => {
+  const { attendance } = store
   const item = {
     event: event,
     name: member,
+    date: new Date()
   }
-  store.attendance.push(item)
+  const isUnshift = _.find(attendance, {
+    event: event,
+    name: member
+  })
+  isUnshift ?
+    _.remove(store.attendance, { event: item.event, name: item.name }) :
+      store.attendance.push(item)
 }
 
 const newMember = (firstname) => {
@@ -52,7 +52,8 @@ const mountEvents = () => {
     const attendees = []
     _.map(filtered, (each, k) => {
       const name = { 
-        name: each.name 
+        name: each.name,
+        date: each.date,
       }
       attendees.push(name)
     })
