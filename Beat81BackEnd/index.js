@@ -10,7 +10,8 @@ const {
   dataEvents, 
   dataImages, 
   members, 
-  nextDays
+  nextDays,
+  returnUserImage,
 } = require("./data")
 
 const store = {
@@ -39,7 +40,7 @@ const checkin = (event, member) => {
 const newMember = (firstname) => {
   const item = {
     name: firstname,
-    img: dataImages.items[0]
+    img: returnUserImage(0)
   }
   store.members.push(item)
 }
