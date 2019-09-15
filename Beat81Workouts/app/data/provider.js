@@ -18,10 +18,12 @@ const Provider = (props) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const [loaded, setLoaded] = React.useState(false)
 
-  const API_URL = 
+  let API_URL = 
     Platform.OS === `android` ? 
       `http://10.0.2.2:3000` : 
         `http://localhost:3000`
+
+  // API_URL = `xprog....` // xprog-server
 
   const socket = io(API_URL)
 

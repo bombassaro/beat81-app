@@ -22,8 +22,7 @@ const WorkoutsScreen = (props) => {
     return ( 
       <Container>
         <View>
-          <Text>Content.Provider not found.</Text>
-          <Text>Check socket connection.</Text>
+          <Text>Loading...</Text>
         </View>
       </Container>
     )
