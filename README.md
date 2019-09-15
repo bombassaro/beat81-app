@@ -3,6 +3,9 @@ BEAT81 // Coding task: React-Native app
 
 App to manage check-ins in workout classes.
 
+![alt text](./Beat81Builds/version001.gif)
+
+
 - React-Native
 - React-Navigation
 - React-Hooks
@@ -24,4 +27,3 @@ To run the service API:
 Configure local `API_URL`:
 - Open ```/Beat81Workouts/app/data/provider.js```
 - Edit `API_URL` between lines 21-26
-
